@@ -15,7 +15,8 @@ class Block{
     }
 
     mineBlock(difficulty){
-        while(this.hash.substring(0, difficulty) != Array(difficulty + 1).join("0")){
+        while(this.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")){
+            this.nonce++;
             this.hash = this.calculateHash();
         }
         console.log("Block mined " + this.hash);
@@ -26,7 +27,7 @@ class Block{
 class Blockchain{
     constructor(){
         this.chain = [this.createGenesisBlock()];
-        this.difficulty = 1;
+        this.difficulty = 4;
     }
 
     createGenesisBlock(){
@@ -49,11 +50,11 @@ class Blockchain{
             const currentBlock = this.chain[i];
             const previousBlock = this.chain[i - 1];
             
-            if(currentBlock.hash != currentBlock.calculateHash()){
+            if(currentBlock.hash !== currentBlock.calculateHash()){
                 return false;
             }
 
-            if(currentBlock.previoushash != previousBlock.hash){
+            if(currentBlock.previoushash !== previousBlock.hash){
                 return false;
             }
         }
@@ -67,5 +68,5 @@ let inkoin = new Blockchain();
 console.log("Mining Block 1...");
 inkoin.addBlock(new Block(1, "21/3/2018", {amount: 2}));
 
-console.log("Mining Block 1...");
+console.log("Mining Block 2...");
 inkoin.addBlock(new Block(2, "22/3/2018", {amount: 7}));
